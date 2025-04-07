@@ -9,12 +9,10 @@ import prism from "prismjs";
 import ReactMarkdown from "react-markdown";
 import "remixicon/fonts/remixicon.css";
 import { useCallback } from "react";
-import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 import remarkGfm from "remark-gfm"; // Import GitHub-flavored markdown plugin
-import { useSpeechSynthesis } from "react-speech-kit"; // Import speech synthesis hook
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-
 
 const Main = () => {
   const ResultDataRef = useRef(null);
@@ -23,7 +21,6 @@ const Main = () => {
   const [copyCodeSuccess, setCopyCodeSuccess] = useState(false);
   const [showDelayedResult, setShowDelayedResult] = useState(false);
   const [isListening, setIsListening] = useState(false);
-  const { speak, cancel, speaking, voices } = useSpeechSynthesis(); // Add `voices` to access available voices
   const [isSpeaking, setIsSpeaking] = useState(false); // Track if speaking is active
   const [currentIndex, setCurrentIndex] = useState(0); // Track the current word index
   const [isDarkMode, setIsDarkMode] = useState(true); // State to track dark mode
@@ -97,35 +94,6 @@ const Main = () => {
     return "en"; // Default to English
   };
 
-  const handleTalkback = useCallback(() => {
-    const textOutput = Array.from(ResultDataRef.current?.querySelectorAll(".result-text p") || [])
-      .map((p) => p.innerText)
-      .join(" "); // Extract all text paragraphs inside the result-text div
-    const words = textOutput.split(" "); // Split text into words
-    const language = detectLanguage(textOutput); // Detect language of the text
-    const voice = voices.find((v) => v.lang.startsWith(language)) || voices[0]; // Find a matching voice
-
-    if (isSpeaking) {
-      cancel(); // Stop speaking if already active
-      setIsSpeaking(false);
-    } else {
-      setIsSpeaking(true);
-      speak({
-        text: words.slice(currentIndex).join(" "), // Start from the current index
-        voice, // Use the detected voice
-        onEnd: () => {
-          setIsSpeaking(false);
-          setCurrentIndex(0); // Reset index when reading is complete
-        },
-        onBoundary: (event) => {
-          if (event.name === "word") {
-            setCurrentIndex((prevIndex) => prevIndex + 1); // Update index as words are spoken
-          }
-        },
-      });
-    }
-  }, [speak, cancel, isSpeaking, currentIndex, voices]);
-
   const {
     onSent,
     recentPrompt,
@@ -172,8 +140,6 @@ const Main = () => {
     browserSupportsSpeechRecognition
   } = useSpeechRecognition();
 
-  const listeningTimeoutRef = useRef(null); // Ref to hold the timeout for auto-stop
-
   const startListening = () => {
     if (!browserSupportsSpeechRecognition) {
       console.error("Browser doesn't support speech recognition.");
@@ -183,33 +149,13 @@ const Main = () => {
     SpeechRecognition.startListening({ continuous: true, language: "en-US" });
     setIsListening(true);
     resetTranscript(); // Clear the transcript to avoid duplication
-
-    // Automatically stop listening after 10 seconds
-    if (listeningTimeoutRef.current) {
-      clearTimeout(listeningTimeoutRef.current);
-    }
-    listeningTimeoutRef.current = setTimeout(() => {
-      stopListening();
-    }, 10000); // Stop after 10 seconds
   };
 
   const stopListening = () => {
     SpeechRecognition.stopListening();
     setIsListening(false);
     resetTranscript(); // Clear the transcript after processing
-
-    // Clear the timeout if it exists
-    if (listeningTimeoutRef.current) {
-      clearTimeout(listeningTimeoutRef.current);
-      listeningTimeoutRef.current = null;
-    }
   };
-
-  useEffect(() => {
-    if (isListening) {
-      setInput(transcript); // Update the input box in real-time with the transcript
-    }
-  }, [transcript, isListening]);
 
   const toggleListening = () => {
     if (isListening) {
@@ -218,6 +164,12 @@ const Main = () => {
       startListening();
     }
   };
+
+  useEffect(() => {
+    if (isListening) {
+      setInput(transcript); // Update the input box in real-time with the transcript
+    }
+  }, [transcript, isListening]);
 
   useEffect(() => {
     if (!browserSupportsSpeechRecognition) {
@@ -230,9 +182,6 @@ const Main = () => {
     return () => {
       SpeechRecognition.stopListening();
       resetTranscript();
-      if (listeningTimeoutRef.current) {
-        clearTimeout(listeningTimeoutRef.current);
-      }
     };
   }, []);
 
@@ -316,7 +265,7 @@ const Main = () => {
               </div>
               <div className="talkback" style={{ position: "absolute", top: "0", right: "20px" }}>
                 <button
-                  onClick={handleTalkback}
+                  onClick={() => setIsSpeaking(!isSpeaking)}
                   style={{
                     backgroundColor: isSpeaking ? "#f0c040" : "#e0e0e0", // Change background color based on state
                     border: "none",

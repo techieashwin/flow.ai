@@ -18,6 +18,7 @@
     "@react-three/fiber": "^9.1.1",
     "@tailwindcss/forms": "^0.5.10",
     "@types/three": "^0.175.0",
+    "gsap": "^3.12.7",
     "image-js": "^0.36.0",
     "js": "^0.1.0",
     "prismjs": "^1.30.0",

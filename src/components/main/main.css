@@ -660,6 +660,30 @@ textarea::-webkit-scrollbar {
   }
 }
 
+@media (max-width:370px) {
+    .result-text {
+        font-size: 12px; /* Maintain readability */
+        max-height: 372px; /* Increased height for small screens */
+        padding: 8px; /* Adjust padding */
+      }
+      .search-box {
+        width: 95%; /* Increase width for small screens */
+        padding: 8px 12px; /* Adjust padding for better visibility */
+        position: fixed;
+        bottom: 30%;
+    }
+    .result-title {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 10px;
+        margin: 18px;
+    }
+    .result-data {
+        width: 100%; /* Ensure full width on small screens */
+        box-sizing: border-box; /* Include padding and border in width */
+    }
+}
+
 /* Light mode styles */
 body.light-mode {
     background-color: #ffffff;

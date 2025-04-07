@@ -21,6 +21,7 @@ const Main = () => {
   const [copyCodeSuccess, setCopyCodeSuccess] = useState(false);
   const [showDelayedResult, setShowDelayedResult] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  const listeningTimeoutRef = useRef(null); // Ref to hold the timeout for auto-stop
   const [isSpeaking, setIsSpeaking] = useState(false); // Track if speaking is active
   const [currentIndex, setCurrentIndex] = useState(0); // Track the current word index
   const [isDarkMode, setIsDarkMode] = useState(true); // State to track dark mode
@@ -149,12 +150,26 @@ const Main = () => {
     SpeechRecognition.startListening({ continuous: true, language: "en-US" });
     setIsListening(true);
     resetTranscript(); // Clear the transcript to avoid duplication
+
+    // Automatically stop listening after 10 seconds
+    if (listeningTimeoutRef.current) {
+      clearTimeout(listeningTimeoutRef.current);
+    }
+    listeningTimeoutRef.current = setTimeout(() => {
+      stopListening();
+    }, 10000); // Stop after 10 seconds
   };
 
   const stopListening = () => {
     SpeechRecognition.stopListening();
     setIsListening(false);
     resetTranscript(); // Clear the transcript after processing
+
+    // Clear the timeout if it exists
+    if (listeningTimeoutRef.current) {
+      clearTimeout(listeningTimeoutRef.current);
+      listeningTimeoutRef.current = null;
+    }
   };
 
   const toggleListening = () => {
@@ -182,12 +197,35 @@ const Main = () => {
     return () => {
       SpeechRecognition.stopListening();
       resetTranscript();
+      if (listeningTimeoutRef.current) {
+        clearTimeout(listeningTimeoutRef.current);
+      }
     };
   }, []);
 
   const toggleTheme = () => {
     setIsDarkMode((prevMode) => !prevMode);
     document.body.classList.toggle("light-mode", !isDarkMode); // Toggle class on body
+  };
+
+  const handleTalkback = () => {
+    const textOutput = Array.from(ResultDataRef.current?.querySelectorAll(".result-text p") || [])
+      .map((p) => p.innerText)
+      .join(" "); // Extract all text paragraphs inside the result-text div
+
+    if (isSpeaking) {
+      window.speechSynthesis.cancel(); // Stop speaking if already active
+      setIsSpeaking(false);
+    } else {
+      const utterance = new SpeechSynthesisUtterance(textOutput);
+      utterance.lang = "en-US"; // Set the language
+      utterance.rate = 1; // Set the speaking rate (1 is normal speed)
+      utterance.onend = () => {
+        setIsSpeaking(false); // Reset state when speaking ends
+      };
+      window.speechSynthesis.speak(utterance);
+      setIsSpeaking(true);
+    }
   };
 
   if (!browserSupportsSpeechRecognition) {
@@ -265,7 +303,7 @@ const Main = () => {
               </div>
               <div className="talkback" style={{ position: "absolute", top: "0", right: "20px" }}>
                 <button
-                  onClick={() => setIsSpeaking(!isSpeaking)}
+                  onClick={handleTalkback}
                   style={{
                     backgroundColor: isSpeaking ? "#f0c040" : "#e0e0e0", // Change background color based on state
                     border: "none",

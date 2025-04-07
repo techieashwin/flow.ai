@@ -35,6 +35,7 @@ main {
     color: white;
     overflow: hidden;
     box-sizing: border-box; /* Ensure padding and border are included in width/height */
+    z-index: 9999; /* Ensure the main container has the highest z-index */
 }
 
 .main .nav {
@@ -61,8 +62,8 @@ main {
     border: none;
     outline: none;
     background-color: #6c5ce7;
-    padding: 10px 20px;
-    font-size: 12px;
+    padding: 10px 20px; /* Revert to original padding */
+    font-size: 12px; /* Revert to original font size */
     font-weight: 700;
     color: #fff;
     border-radius: 5px;
@@ -74,6 +75,11 @@ main {
 .nav-r button:active {
     transform: translateY(5px);
     box-shadow: 0px 0px 0px 0px #a29bfe;
+}
+
+.nav-r img {
+    height: 40px; /* Revert to original height */
+    width: 40px; /* Revert to original width */
 }
 
 .nav p {
@@ -139,19 +145,6 @@ textarea::-webkit-scrollbar {
     cursor: pointer;
 }
 
-.app{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-}
-.card img{
-   height: 60px;
-   width: 60px;
-   border-radius: 50%;
-}
 
 .main .cards {
     display: grid;
@@ -545,6 +538,15 @@ textarea::-webkit-scrollbar {
         text-align: center;
         bottom: 1.3%;
     }
+    .nav-r button {
+        padding: 12px 30px; /* Revert to original padding */
+        font-size: 12px; /* Revert to original font size */
+    }
+
+    .nav-r img {
+        height: 40px; /* Revert to original height */
+        width: 40px; /* Revert to original width */
+    }
 }
 
 @media (max-width: 768px) {
@@ -608,10 +610,7 @@ textarea::-webkit-scrollbar {
     margin: 0; /* Remove margin */
   }
 
-  .nav-r button {
-    padding: 8px 16px; /* Reduce padding for smaller screens */
-    font-size: 11px; /* Reduce font size for smaller screens */
-  }
+
 }
 
 @media (max-width: 480px) {
@@ -660,7 +659,7 @@ textarea::-webkit-scrollbar {
   }
 }
 
-@media (max-width:370px) {
+@media (max-width:360px) {
     .result-text {
         font-size: 12px; /* Maintain readability */
         max-height: 372px; /* Increased height for small screens */
@@ -681,6 +680,16 @@ textarea::-webkit-scrollbar {
     .result-data {
         width: 100%; /* Ensure full width on small screens */
         box-sizing: border-box; /* Include padding and border in width */
+    }
+    .nav-r button {
+        height: 30px; /* Further reduce height for very small screens */
+        padding: 4px 8px; /* Adjust padding */
+        font-size: 9px; /* Further reduce font size */
+    }
+
+    .nav-r img {
+        height: 25px; /* Further reduce image height */
+        width: 25px; /* Further reduce image width */
     }
 }
 
@@ -740,7 +749,7 @@ body.light-mode .copy span {
     background-color: black;
     position: fixed;
     top: 0;
-    z-index:9999 ;
+    z-index:99999;
 }
 .loader-container h3{
     background: linear-gradient(to right, #09f1b8, #00a2ff, #a03ef6, #35f7e7);
@@ -889,7 +898,7 @@ body.light-mode .copy span {
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     font-family: "Orbitron", sans-serif;
-    z-index: 1000;
+    z-index: 9998; /* Ensure weather and time displays are below the main container */
     display: flex;
     align-items: center;
     gap: 10px;

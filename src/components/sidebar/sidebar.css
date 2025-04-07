@@ -1,48 +1,49 @@
-.sidebar{
+.sidebar {
     min-height: 100vh;
-    display:inline-flex;
+    display: inline-flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 25px 15px;
-    background-color:#1d1e2f;
+    background-color: #1d1e2f;
     color: white;
 }
 
-.sidebar img{
+.sidebar img {
     width: 20px;
 }
 
-.ri-menu-line{
+.ri-menu-line {
     position: absolute;
     top: 12;
     font-size: 20px;
     cursor: pointer;
 }
 
-.sidebar .new-chat{
-   margin-top: 50px;
-   display: inline-flex;
-   align-items: center;
-   gap: 10px;
-   padding: 10px 15px;
-   background-color: #3a404b;
-   border-radius: 50px;
-   font-size: 14px;
-   color: #fff;
-   cursor: pointer;
+.sidebar .new-chat {
+    margin-top: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    background-color: #3a404b;
+    border-radius: 50px;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
 }
-.sidebar .recent{
+
+.sidebar .recent {
     display: flex;
     flex-direction: column;
     animation: fadeIn 1.5s;
 }
 
-.sidebar .recent-title{
+.sidebar .recent-title {
     margin-top: 30px;
     margin-bottom: 20px;
 }
 
-.sidebar .recent-entry{
+.sidebar .recent-entry {
     display: flex;
     align-items: start;
     gap: 10px;
@@ -52,25 +53,42 @@
     color: #fff;
     cursor: pointer;
 }
-.sidebar .recent-entry:hover{
-     background-color: #14191f;
+
+.sidebar .recent-entry:hover {
+    background-color: #14191f;
 }
 
-.sidebar .bottom{
+.sidebar .bottom {
     display: flex;
     flex-direction: column;
 }
-.sidebar .bottom i{
+
+.sidebar .bottom i {
     font-size: 22px;
 }
 
-.sidebar .bottom-item{
+.sidebar .bottom-item {
     padding-right: 10px;
     cursor: pointer;
 }
 
-@media (max-width:600px){
-    .sidebar{
-        display: none;
+.app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 180px;
+}
+
+.card img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+@media (max-width: 600px) {
+    .sidebar {
+        display: none; /* Hide sidebar on small screens */
     }
 }

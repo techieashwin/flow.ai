@@ -394,7 +394,7 @@ textarea::-webkit-scrollbar {
     position: absolute;
     z-index: 1;
     top: -35px; /* Position the tooltip above the icon */
-    left: 50%;
+    left: 2%;
     transform: translateX(-50%);
     opacity: 0;
     transition: opacity 0.3s;
@@ -821,8 +821,8 @@ body.light-mode .copy span {
 }
 
 .search-box img {
-    width: 16px; /* Smaller icon size */
-    height: 16px; /* Smaller icon size */
+    width: 20px; /* Smaller icon size */
+    height: 20px; /* Smaller icon size */
     cursor: pointer;
 }
 
@@ -848,6 +848,12 @@ body.light-mode .copy span {
     .search-box img {
         width: 20px; /* Slightly larger icon size */
         height: 20px; /* Slightly larger icon size */
+    }
+    .copy span{
+       left: 7%;
+       top: -23px;
+       width: 60px;
+       font-size: 6px;
     }
 }
 

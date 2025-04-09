@@ -376,7 +376,7 @@ const Main = () => {
               placeholder="Enter prompt here"
               onKeyUp={handleKeyUp}
             />
-            <div>
+            <div className="send-mic">
               <button
                 onClick={toggleListening}
                 className={isListening ? "mic-active" : ""}

@@ -222,6 +222,11 @@ textarea::-webkit-scrollbar {
 .mic-active {
     animation: pulse 1.5s infinite;
 }
+.send-mic{
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
 
 @keyframes pulse {
     0% {
@@ -538,14 +543,15 @@ textarea::-webkit-scrollbar {
         text-align: center;
         bottom: 1.3%;
     }
-    .nav-r button {
-        padding: 6px 10px; /* Revert to original padding */
-        font-size: 12px; /* Revert to original font size */
-    }
+   
 
     .nav-r img {
         height: 40px; /* Revert to original height */
         width: 40px; /* Revert to original width */
+    }
+    .nav-r button {
+        padding: 6px 6px; /* Adjust padding for smaller screens */
+        font-size: 6px; /* Adjust font size for smaller screens */
     }
 }
 
@@ -609,11 +615,11 @@ textarea::-webkit-scrollbar {
     padding: 0; /* Remove padding */
     margin: 0; /* Remove margin */
   }
-
+ 
 
 }
 
-@media (max-width: 480px) {
+@media (max-width: 380px) {
   .result-text {
     font-size: 12px; /* Maintain readability */
     max-height: 372px; /* Increased height for small screens */
@@ -686,9 +692,6 @@ textarea::-webkit-scrollbar {
     .result-data {
         width: 100%; /* Ensure full width on small screens */
         box-sizing: border-box; /* Include padding and border in width */
-    }
-    .nav-r button {
-        font-size: 9px; /* Further reduce font size */
     }
 }
 
@@ -834,7 +837,7 @@ body.light-mode .copy span {
         position: fixed;
         bottom: 5%;
     }
-
+   
     .search-box input {
         font-size: 14px; /* Slightly larger font size for better readability */
         padding: 6px; /* Adjust padding */
@@ -846,8 +849,8 @@ body.light-mode .copy span {
     }
 
     .search-box img {
-        width: 16px; /* Slightly larger icon size */
-        height: 16px; /* Slightly larger icon size */
+        width: 20px; /* Slightly larger icon size */
+        height: 20px; /* Slightly larger icon size */
     }
 }
 

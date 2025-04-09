@@ -179,7 +179,6 @@ textarea::-webkit-scrollbar {
 .main .card span {
     visibility: hidden;
     width: 120px;
-    background-color: #3e434f;
     color: #fff;
     text-align: center;
     font-size: 13px;
@@ -804,10 +803,9 @@ body.light-mode .copy span {
 .search-box button {
     border: none;
     outline: none;
-    background-color: #6c5ce7;
     color: #fff;
-    padding: 6px 12px; /* Reduced padding for smaller size */
-    border-radius: 15px; /* Smaller border radius */
+    padding: 6px 10px; /* Reduced padding for smaller size */
+    border-radius: 30px; /* Smaller border radius */
     font-size: 12px; /* Smaller font size */
     font-weight: bold;
     cursor: pointer;
@@ -815,7 +813,6 @@ body.light-mode .copy span {
 }
 
 .search-box button:hover {
-    background-color: #5a4dcf;
     transform: scale(1.05); /* Slightly enlarge on hover */
 }
 

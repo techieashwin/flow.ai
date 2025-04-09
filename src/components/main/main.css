@@ -62,7 +62,7 @@ main {
     border: none;
     outline: none;
     background-color: #6c5ce7;
-    padding: 10px 20px; /* Revert to original padding */
+    padding: 10x 20px; /* Revert to original padding */
     font-size: 12px; /* Revert to original font size */
     font-weight: 700;
     color: #fff;
@@ -116,7 +116,7 @@ main {
 textarea {
     background-color: #2d2c39;
     color: #fff;
-    outline: none;
+    outline: noe;
     border: none;
     width: 330px;
     height: 50px;
@@ -613,10 +613,10 @@ textarea::-webkit-scrollbar {
 
 }
 
-@media (max-width: 480px) {
+@media (max-width: 470px) {
   .result-text {
     font-size: 12px; /* Maintain readability */
-    max-height: 452px; /* Increased height for small screens */
+    max-height: 372px; /* Increased height for small screens */
     padding: 8px; /* Adjust padding */
   }
 
@@ -625,6 +625,12 @@ textarea::-webkit-scrollbar {
     font-size: 12px; /* Maintain readability */
     padding: 8px; /* Adjust padding */
   }
+  .result-title {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 13px 0px;
+}
 
   .result-title img {
     width: 30px; /* Maintain proportional image size */

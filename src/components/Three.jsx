@@ -23,10 +23,10 @@ const Three = () => {
     renderer.setClearColor(0x000000, 0); // Set background color to transparent
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
-    mountRef.current.appendChild(renderer.domElement);
 
-scene.position.set(0, 0, 0);
-
+    if (mountRef.current) {
+      mountRef.current.appendChild(renderer.domElement);
+    }
 
     // Lighting
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
@@ -85,7 +85,9 @@ scene.position.set(0, 0, 0);
     // Cleanup
     return () => {
       window.removeEventListener("resize", handleResize);
-      mountRef.current.removeChild(renderer.domElement);
+      if (mountRef.current && renderer.domElement) {
+        mountRef.current.removeChild(renderer.domElement);
+      }
       renderer.dispose();
     };
   }, []);

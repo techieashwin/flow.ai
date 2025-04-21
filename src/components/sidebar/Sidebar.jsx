@@ -60,6 +60,9 @@ const Sidebar = () => {
         <Link to="https://filecompress.netlify.app/" className="card">
           <img src={assets.pdf} alt="" />
         </Link>
+        <Link to="https://imaginative-bunny-3ff8ca.netlify.app/" className="card">
+          <img src="https://avepdf.com/images/text-to-pdf-rating.png" alt="" />
+        </Link>
       </div>
     </div>
   );

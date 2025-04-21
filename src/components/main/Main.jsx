@@ -3,16 +3,17 @@ import "./main.css";
 import { assets } from "../../assets/assets";
 import { Context } from "../../context/Context";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Link } from "react-router-dom";
 import "prismjs/themes/prism.css";
 import prism from "prismjs";
 import ReactMarkdown from "react-markdown";
 import "remixicon/fonts/remixicon.css";
 import { useCallback } from "react";
-import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 import remarkGfm from "remark-gfm"; // Import GitHub-flavored markdown plugin
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 const Main = () => {
   const ResultDataRef = useRef(null);
@@ -42,7 +43,7 @@ const Main = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          const apiKey = "e8bd754abace7f3ae015739672ed7bec"; // Replace with your OpenWeather API key
+          const apiKey = "2VXNCLWCN2QYBZTHRJU89EP"; // Replace with your OpenWeather API key
           const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${apiKey}`;
 
           fetch(weatherApiUrl)
@@ -65,12 +66,19 @@ const Main = () => {
   };
 
   const formatDate = (date) => {
-    const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
     return date.toLocaleDateString(undefined, options);
   };
 
   const copyResultDataToClipboard = useCallback(() => {
-    const textOutput = Array.from(ResultDataRef.current?.querySelectorAll(".result-text p") || [])
+    const textOutput = Array.from(
+      ResultDataRef.current?.querySelectorAll(".result-text p") || []
+    )
       .map((p) => p.innerText)
       .join("\n"); // Extract all text paragraphs inside the result-text div
     navigator.clipboard.writeText(textOutput).then(() => {
@@ -138,7 +146,7 @@ const Main = () => {
     transcript,
     listening,
     resetTranscript,
-    browserSupportsSpeechRecognition
+    browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
 
   const startListening = () => {
@@ -209,7 +217,9 @@ const Main = () => {
   };
 
   const handleTalkback = () => {
-    const textOutput = Array.from(ResultDataRef.current?.querySelectorAll(".result-text p") || [])
+    const textOutput = Array.from(
+      ResultDataRef.current?.querySelectorAll(".result-text p") || []
+    )
       .map((p) => p.innerText)
       .join(" "); // Extract all text paragraphs inside the result-text div
 
@@ -233,18 +243,17 @@ const Main = () => {
   }
 
   const quesRef = useRef(null);
-  gsap.registerPlugin(useGSAP)
+  gsap.registerPlugin(useGSAP);
 
-  useGSAP(()=>{
-        gsap.from(quesRef.current, {
-        duration: 1,
-        delay: 9,
-        opacity: 0,
-        y: 250,
-        ease: "power4.out",
-      });
-  })
-
+  useGSAP(() => {
+    gsap.from(quesRef.current, {
+      duration: 1,
+      delay: 9,
+      opacity: 0,
+      y: 250,
+      ease: "power4.out",
+    });
+  });
 
   return (
     <div className={`main ${isDarkMode ? "dark-mode" : "light-mode"}`}>
@@ -291,7 +300,7 @@ const Main = () => {
               ) : (
                 <img src={assets.user_icon} alt="" />
               )}
-                <p>{recentPrompt}</p>
+              <p>{recentPrompt}</p>
             </div>
             <div className="result-data">
               <div className="copy">
@@ -301,7 +310,10 @@ const Main = () => {
                   className="ri-clipboard-fill"
                 ></i>
               </div>
-              <div className="talkback" style={{ position: "absolute", top: "0", right: "20px" }}>
+              <div
+                className="talkback"
+                style={{ position: "absolute", top: "0", right: "20px" }}
+              >
                 <button
                   onClick={handleTalkback}
                   style={{
@@ -314,7 +326,9 @@ const Main = () => {
                   }}
                 >
                   <i
-                    className={isSpeaking ? "ri-volume-mute-fill" : "ri-volume-up-fill"}
+                    className={
+                      isSpeaking ? "ri-volume-mute-fill" : "ri-volume-up-fill"
+                    }
                     style={{ fontSize: "20px", color: "#000" }}
                   ></i>
                 </button>
@@ -332,22 +346,56 @@ const Main = () => {
                       children={formattedResultData}
                       remarkPlugins={[remarkGfm]} // Enable GitHub-flavored markdown
                       components={{
-                        p: ({ node, ...props }) => <p {...props} style={{ marginBottom: "10px" }} />,
-                        ul: ({ node, ...props }) => <ul {...props} style={{ paddingLeft: "20px", marginBottom: "10px" }} />,
-                        ol: ({ node, ...props }) => <ol {...props} style={{ paddingLeft: "20px", marginBottom: "10px" }} />,
-                        li: ({ node, ...props }) => <li {...props} style={{ marginBottom: "5px" }} />,
+                        p: ({ node, ...props }) => (
+                          <p {...props} style={{ marginBottom: "10px" }} />
+                        ),
+                        ul: ({ node, ...props }) => (
+                          <ul
+                            {...props}
+                            style={{
+                              paddingLeft: "20px",
+                              marginBottom: "10px",
+                            }}
+                          />
+                        ),
+                        ol: ({ node, ...props }) => (
+                          <ol
+                            {...props}
+                            style={{
+                              paddingLeft: "20px",
+                              marginBottom: "10px",
+                            }}
+                          />
+                        ),
+                        li: ({ node, ...props }) => (
+                          <li {...props} style={{ marginBottom: "5px" }} />
+                        ),
                         code({ node, inline, className, children, ...props }) {
                           const match = /language-(\w+)/.exec(className || "");
                           return !inline && match ? (
                             <div style={{ position: "relative" }}>
-                              <pre className={`language-${match[1]}`} style={{ overflow: "auto", width: "100%", color: "#000", backgroundColor: "#ffffff", boxSizing: "border-box", borderRadius: "6px" }}>
+                              <pre
+                                className={`language-${match[1]}`}
+                                style={{
+                                  overflow: "auto",
+                                  width: "100%",
+                                  color: "#000",
+                                  backgroundColor: "#ffffff",
+                                  boxSizing: "border-box",
+                                  borderRadius: "6px",
+                                }}
+                              >
                                 <code {...props} className={className}>
                                   {String(children).replace(/\n$/, "")}
                                 </code>
                               </pre>
                               <button
                                 className="copy-code-button"
-                                onClick={() => copyCodeToClipboard(String(children).replace(/\n$/, ""))}
+                                onClick={() =>
+                                  copyCodeToClipboard(
+                                    String(children).replace(/\n$/, "")
+                                  )
+                                }
                               >
                                 {copyCodeSuccess ? "Copied!" : "Copy Code"}
                               </button>
@@ -361,7 +409,11 @@ const Main = () => {
                       }}
                     />
                   </div>
-                  <textarea ref={hiddenTextareaRef} style={{ position: 'absolute', left: '-9999px' }} readOnly />
+                  <textarea
+                    ref={hiddenTextareaRef}
+                    style={{ position: "absolute", left: "-9999px" }}
+                    readOnly
+                  />
                 </>
               )}
             </div>
@@ -415,21 +467,26 @@ const Main = () => {
             </div>
           </div>
         )}
-        {weatherData && (
-          <div className="weather-display">
-            <img
-              src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
-              alt={weatherData.weather[0].description}
-              className="weather-icon"
-            />
-            <div className="weather-info">
-              <p>{weatherData.name}</p>
-              <p>{Math.round(weatherData.main.temp)}°C</p>
-              <p>{weatherData.weather[0].description}</p>
+        {weatherData &&
+          weatherData.weather &&
+          Array.isArray(weatherData.weather) &&
+          weatherData.weather.length > 0 && (
+            <div className="weather-display">
+              <img
+                src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
+                alt={weatherData.weather[0].description}
+                className="weather-icon"
+              />
+              <div className="weather-info">
+                <p>{weatherData.name}</p>
+                <p>{Math.round(weatherData.main.temp)}°C</p>
+                <p>{weatherData.weather[0].description}</p>
+              </div>
             </div>
-          </div>
+          )}
+        {locationError && (
+          <div className="weather-display">{locationError}</div>
         )}
-        {locationError && <div className="weather-display">{locationError}</div>}
         <div className="time-display">
           <p className="time">{formatTime(currentTime)}</p>
           <p className="date">{formatDate(currentTime)}</p>
